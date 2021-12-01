@@ -1,6 +1,7 @@
 package eu.example.profilecardlayout
 
-// Branch 2
+// Branch 3
+// Video 54
 // Customizing themes
 // Themes are stored in package UI
 // Here I am doing a custom theme - I overwrote the theme in UI package theme.kt
@@ -34,7 +35,6 @@ class MainActivity : ComponentActivity() {
             // from package UI themes
             MyCustomTheme() {
                 MainScreen()
-
             }
         }
     }
@@ -53,7 +53,12 @@ fun MainScreen() {
             // We can delete the next line, since we changed the default surface color in themes
             // So it now defaults to LightGray
             // color = Color.LightGray
-        ) { ProfileCard() } // may not belong here !
+        ) {
+            Column() {
+                ProfileCard()
+                ProfileCard()
+            }
+        }
     }
 }
 
@@ -66,7 +71,6 @@ fun AppBar(){
             Modifier.padding(horizontal = 12.dp)
         ) },
         title = { Text("Messaging Application users")}
-
     )
 }
 
@@ -74,7 +78,7 @@ fun AppBar(){
 fun ProfileCard(){
     Card(
         modifier = Modifier
-            .padding(16.dp)
+            .padding(top = 8.dp, bottom = 4.dp, start = 16.dp, end = 16.dp)
             .fillMaxWidth()
             .wrapContentHeight(align = Alignment.Top),
         elevation = 8.dp,

@@ -41,6 +41,7 @@ fun MyCustomTheme(
         LightColorPalette
     }
 
+    // Themes gets its default values from these classes
     MaterialTheme(
         colors = colors,
         typography = Typography,
