@@ -42,7 +42,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen() {
+fun MainScreen(userProfiles: List<UserProfile> = userProfileList) {
 // Scaffold
 // A container that allows us to pass an application bar to it
 // It should be added to the parent @composable
@@ -56,9 +56,13 @@ fun MainScreen() {
             // color = Color.LightGray
         ) {
             Column() {
-                ProfileCard(userProfileList[0]) // get index zero with brackets method
-                ProfileCard(userProfileList.get(1)) // get index with .set method
-                ProfileCard(userProfileList.component2()) // get index with .component2() method
+
+                // looping over the list we passed as argument for this function
+                for(user in userProfiles)
+                    ProfileCard(userProfile = user)
+//                ProfileCard(userProfileList[0]) // get index zero with brackets method
+//                ProfileCard(userProfileList.get(1)) // get index with .set method
+//                ProfileCard(userProfileList.component2()) // get index with .component2() method
             }
         }
     }
@@ -102,7 +106,7 @@ fun ProfilePicture(drawableId: Int, onlineStatus: Boolean){
     Card(
         shape = CircleShape,
         border = BorderStroke(
-            width = 2.dp,
+            width = 4.dp,
             color = if (onlineStatus == true)
                 { lightGreen200 } // Custom color from UI Color.kt
             else { notOnline}
@@ -126,11 +130,18 @@ fun ProfileContent(userName: String, onlineStatus: Boolean){
             .padding(8.dp)
             .fillMaxWidth()
     ) {
-        Text(
-            text = "$userName", // given as argument when function is called
-            style = MaterialTheme.typography.h5
-        )
+        // Changes the transparency, so its a little greyed out with medium
+        CompositionLocalProvider(LocalContentAlpha provides (
+                if (onlineStatus == true)
+                    1f else ContentAlpha.medium)
+                ){
+            Text(
+                text = "$userName", // given as argument when function is called
+                style = MaterialTheme.typography.h5
+            )
+        }
 
+        // MAYBE ERRORS HERE HERE
         // Changes the transparency, so its a little greyed out with medium
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             Text(
