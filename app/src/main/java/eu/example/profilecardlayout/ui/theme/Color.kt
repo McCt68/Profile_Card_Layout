@@ -12,6 +12,7 @@ val Teal200 = Color(0xFF03DAC5)
 // My Custom Colors
 val veryLightGrey = Color(0x60DCDCDC) // Color int
 val lightGreen200 = Color(0x9932CD32) // Color int
+val notOnline = Color(0xFFF44336) // Color int
 
 // Just for testing
 val test = Color(0xFF00BCD4) // Color int

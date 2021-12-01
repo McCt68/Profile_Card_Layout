@@ -1,8 +1,8 @@
 package eu.example.profilecardlayout
 
-// Branch 3
-// Video 54
-// Customizing themes
+// Branch 4
+// Video 57
+// Making more cards, and extract users to an entoty
 // Themes are stored in package UI
 // Here I am doing a custom theme - I overwrote the theme in UI package theme.kt
 
@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import eu.example.profilecardlayout.ui.theme.MyCustomTheme
 import eu.example.profilecardlayout.ui.theme.lightGreen200
+import eu.example.profilecardlayout.ui.theme.notOnline
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,8 +56,9 @@ fun MainScreen() {
             // color = Color.LightGray
         ) {
             Column() {
-                ProfileCard()
-                ProfileCard()
+                ProfileCard(userProfileList[0]) // get index zero with brackets method
+                ProfileCard(userProfileList.get(1)) // get index with .set method
+                ProfileCard(userProfileList.component2()) // get index with .component2() method
             }
         }
     }
@@ -75,7 +77,7 @@ fun AppBar(){
 }
 
 @Composable
-fun ProfileCard(){
+fun ProfileCard(userProfile: UserProfile){
     Card(
         modifier = Modifier
             .padding(top = 8.dp, bottom = 4.dp, start = 16.dp, end = 16.dp)
@@ -89,23 +91,27 @@ fun ProfileCard(){
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
             ) {
-            ProfilePicture()
-            ProfileContent()
+            ProfilePicture(userProfile.drawableId, userProfile.status )
+            ProfileContent(userProfile.name, userProfile.status)
         }
     }
 }
 
 @Composable
-fun ProfilePicture(){
+fun ProfilePicture(drawableId: Int, onlineStatus: Boolean){
     Card(
         shape = CircleShape,
-        border = BorderStroke(width = 2.dp,
-            color = lightGreen200), // Custom color from UI Color.kt
+        border = BorderStroke(
+            width = 2.dp,
+            color = if (onlineStatus == true)
+                { lightGreen200 } // Custom color from UI Color.kt
+            else { notOnline}
+            ),
         modifier = Modifier.padding(16.dp),
         elevation = 4.dp
     ) {
         Image(
-            painter = painterResource(id = R.drawable.bettine_tenerife), // might have to change picture type
+            painter = painterResource(id = drawableId), // argument passed to function when its called
             modifier = Modifier.size(96.dp),
             contentScale = ContentScale.Crop, // make the picture fit to the container ??
             contentDescription = "Content description"
@@ -114,21 +120,25 @@ fun ProfilePicture(){
 }
 
 @Composable
-fun ProfileContent(){
+fun ProfileContent(userName: String, onlineStatus: Boolean){
     Column(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
     ) {
         Text(
-            text ="Bettine Bauer", // specifying parameter type as text = Bettine
+            text = "$userName", // given as argument when function is called
             style = MaterialTheme.typography.h5
         )
 
         // Changes the transparency, so its a little greyed out with medium
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             Text(
-                "Active now", // not specifying parameter type, it will just use String
+                text = if(onlineStatus == true){
+                    "Active now" // not specifying parameter type, it will just use String
+                } else {
+                    "Offline"
+                },
                 style = MaterialTheme.typography.body2
             )
         }
