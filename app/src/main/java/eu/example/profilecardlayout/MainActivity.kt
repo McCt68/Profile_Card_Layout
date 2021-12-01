@@ -1,5 +1,10 @@
 package eu.example.profilecardlayout
 
+// Branch 2
+// Customizing themes
+// Themes are stored in package UI
+// Here I am doing a custom theme - I overwrote the theme in UI package theme.kt
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -8,6 +13,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -15,27 +22,52 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import eu.example.profilecardlayout.ui.theme.MyCustomTheme
+import eu.example.profilecardlayout.ui.theme.lightGreen200
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MainScreen()
+            // from package UI themes
+            MyCustomTheme() {
+                MainScreen()
+
+            }
         }
     }
 }
 
 @Composable
 fun MainScreen() {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Color.LightGray
-    ) { ProfileCard() } // may not belong here !
+// Scaffold
+// A container that allows us to pass an application bar to it
+// It should be added to the parent @composable
+    Scaffold(topBar = {AppBar()}) {
+
+// What is shown below the topBar
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            // We can delete the next line, since we changed the default surface color in themes
+            // So it now defaults to LightGray
+            // color = Color.LightGray
+        ) { ProfileCard() } // may not belong here !
+    }
+}
+
+@Composable
+fun AppBar(){
+    TopAppBar(
+        navigationIcon = { Icon(
+            Icons.Default.Home,
+            "content description",
+            Modifier.padding(horizontal = 12.dp)
+        ) },
+        title = { Text("Messaging Application users")}
+
+    )
 }
 
 @Composable
@@ -45,7 +77,8 @@ fun ProfileCard(){
             .padding(16.dp)
             .fillMaxWidth()
             .wrapContentHeight(align = Alignment.Top),
-        elevation = 8.dp
+        elevation = 8.dp,
+        backgroundColor = Color.White // set background to white, so it don't use default from theme
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -60,8 +93,10 @@ fun ProfileCard(){
 
 @Composable
 fun ProfilePicture(){
-    Card(shape = CircleShape,
-        border = BorderStroke(width = 2.dp, color = Color.Green),
+    Card(
+        shape = CircleShape,
+        border = BorderStroke(width = 2.dp,
+            color = lightGreen200), // Custom color from UI Color.kt
         modifier = Modifier.padding(16.dp),
         elevation = 4.dp
     ) {
@@ -99,5 +134,7 @@ fun ProfileContent(){
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
+    MyCustomTheme() {
         MainScreen()
+    }
 }

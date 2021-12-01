@@ -5,21 +5,24 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
     primary = Purple200,
     primaryVariant = Purple700,
-    secondary = Teal200
+    secondary = Teal200,
+    surface = Color.White // Just changed this to default white
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
+    primary = Teal200, // changed this
     primaryVariant = Purple700,
-    secondary = Teal200
+    secondary = Purple500, // // changed this
+    surface = veryLightGrey // overridden the surface color with my custom from package UI - Color.kt
+
 
     /* Other default colors to override
     background = Color.White,
-    surface = Color.White,
     onPrimary = Color.White,
     onSecondary = Color.Black,
     onBackground = Color.Black,
@@ -28,7 +31,7 @@ private val LightColorPalette = lightColors(
 )
 
 @Composable
-fun ProfileCardLayoutTheme(
+fun MyCustomTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable() () -> Unit
 ) {
