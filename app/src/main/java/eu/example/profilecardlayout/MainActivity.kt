@@ -7,11 +7,9 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -78,14 +76,24 @@ fun ProfilePicture(){
 
 @Composable
 fun ProfileContent(){
-    Text(
-        textAlign = TextAlign.Center, // dont work ??
-        text = "Bettine Bauer",
-        fontStyle = FontStyle.Italic
-
-
+    Column(
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth()
+    ) {
+        Text(
+            text ="Bettine Bauer", // specifying parameter type as text = Bettine
+            style = MaterialTheme.typography.h5
         )
-    
+
+        // Changes the transparency, so its a little greyed out with medium
+        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+            Text(
+                "Active now", // not specifying parameter type, it will just use String
+                style = MaterialTheme.typography.body2
+            )
+        }
+    }
 }
 
 @Preview(showBackground = true)
