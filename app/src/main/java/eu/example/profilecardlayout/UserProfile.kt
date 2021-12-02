@@ -17,6 +17,15 @@ data class UserProfile constructor (
 val userProfileList = arrayListOf<UserProfile>(
     UserProfile("Bettine", true, R.drawable.bettine_tenerife),
     UserProfile("Fætter BR", false, R.drawable.peter_br),
+    UserProfile(name = "Michael", status = true, R.drawable.michael_thailand),
+    UserProfile("Bettine", true, R.drawable.bettine_tenerife),
+    UserProfile("Fætter BR", false, R.drawable.peter_br),
+    UserProfile(name = "Michael", status = true, R.drawable.michael_thailand),
+    UserProfile("Bettine", true, R.drawable.bettine_tenerife),
+    UserProfile("Fætter BR", false, R.drawable.peter_br),
+    UserProfile(name = "Michael", status = true, R.drawable.michael_thailand),
+    UserProfile("Bettine", true, R.drawable.bettine_tenerife),
+    UserProfile("Fætter BR", false, R.drawable.peter_br),
     UserProfile(name = "Michael", status = true, R.drawable.michael_thailand)
 
 )
