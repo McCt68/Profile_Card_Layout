@@ -1,7 +1,8 @@
 package eu.example.profilecardlayout
 
-// Video 59
-// Using LazyColumns for long list
+// Video 62
+// Using LazyColumns for long list from Url's
+// Pictures dont laod in emulator, but runs fine on real device
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -66,14 +67,11 @@ fun MainScreen(userProfiles: List<UserProfile> = userProfileList) {
 //      About avoiding to load all items in a list, even they are not all visible to the user.
 //      with LazyColumn we only load those that are visible
 //      We can set it to maybe 1-2 to each end below and above the actual visual screen -
-//      to have them ready for view when the user scrools into them.
+//      to have them ready for view when the user scrolls into them.
             LazyColumn() {
                 items(userProfiles) {userProfile ->
                     ProfileCard(userProfile = userProfile)
                 }
-
-
-
             }
         }
     }
@@ -110,14 +108,14 @@ fun ProfileCard(userProfile: UserProfile){
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
             ) {
-            ProfilePicture(userProfile.drawableId, userProfile.status )
+            ProfilePicture(userProfile.pictureUrl, userProfile.status )
             ProfileContent(userProfile.name, userProfile.status)
         }
     }
 }
 
 @Composable
-fun ProfilePicture(drawableId: Int, onlineStatus: Boolean){
+fun ProfilePicture(pictureUrl: String, onlineStatus: Boolean){
     Card(
         shape = CircleShape,
         border = BorderStroke(
@@ -133,7 +131,7 @@ fun ProfilePicture(drawableId: Int, onlineStatus: Boolean){
         Image(
             // get from URL
             painter = rememberImagePainter(
-                data = drawableId,
+                data = pictureUrl,
                 builder = {
                     transformations(CircleCropTransformation())
                 },),
